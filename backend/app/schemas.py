@@ -1,5 +1,5 @@
 from pydantic import BaseModel, field_validator
-from datetime import datetime
+from datetime import datetime, date
 from typing import Optional
 
 class HabitCreate(BaseModel):
@@ -26,7 +26,7 @@ class HabitResponse(BaseModel):
 class CompletionResponse(BaseModel):
     id: int
     habit_id: int
-    completed_date: datetime
+    completed_date: date
 
     class Config:
         from_attributes = True
