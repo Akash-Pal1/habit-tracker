@@ -104,6 +104,7 @@ def complete_habit(habit_id : int , db: Session = Depends(get_db)):
     db.refresh(new_completion)
     return new_completion
 
+# fixed this endpoint
 @app.get("/habits/{habit_id}/completions", response_model=List[schemas.CompletionResponse])
 def get_habits_completions(habit_id: int, db: Session = Depends(get_db)):
     habits_completions = db.query(models.HabitCompletion).filter(models.HabitCompletion.habit_id == habit_id).all()
