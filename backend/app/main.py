@@ -75,7 +75,7 @@ def get_habits(db: Session = Depends(get_db)):
 
     return result
     
-@app.delete("/delete/{id}")
+@app.delete("/habits/{id}")
 def delete_habits(id: int, db: Session = Depends(get_db)):
     habit = db.query(models.Habit).filter(models.Habit.id == id).first()
     if not habit:
