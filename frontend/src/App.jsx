@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react"
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts"
 import axios from "axios"
 import HabitForm from "./components/HabitForm"
+import HabitCard from "./components/HabitCard"
 
 const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000"
 
 export default function App() {
-  const [habit, setHabit] = useState([])
+  const [habits, setHabits] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
 
@@ -21,9 +21,9 @@ export default function App() {
     setError("")
     try {
     const habitRes = await axios.get(`${API}/habits`)
-    setHabit(habitRes.data)
+    setHabits(habitRes.data)
     } catch(err){
-      setError(err.response?.data?.details?.[0]?.msg || "Something went wrong")
+      setError(err.response?.data?.detail?.[0]?.msg || "Something went wrong")
     } finally{
       setLoading(false)
     }   
@@ -37,7 +37,7 @@ export default function App() {
       })
       fetchHabits()
     }catch(err){
-      setError(err.response?.data?.details?.[0]?.msg || "Something went wrong")
+      setError(err.response?.data?.detail?.[0]?.msg || "Something went wrong")
     }
   }
 
@@ -52,16 +52,28 @@ export default function App() {
       await axios.post(`${API}/habits/${habit_id}/complete`)
       fetchHabits()
     } catch(err){
-      setError(err.response?.data?.details?.[0]?.msg || "Something went wrong")
+      setError(err.response?.data?.detail || "Already Completed")
+      setTimeout(() => setError(""),3000)
     }
   }
 
   if (loading) return <p> Loading ...</p>
-  if (error) return <p>{error}</p>
+  // if (error) return <p>{error}</p>
 
   return (
     <div>
+      {error && <p className="text-red-500">{error}</p>}
       <HabitForm onAdd={handleAdd}></HabitForm>
+      <p>Total habits: {habits.length}</p>
+      {habits.map(habit => (
+      <HabitCard
+        key={habit.id}
+        habit={habit}        
+        onComplete={handleCompletion}
+        onDelete={handelDelete}
+      />
+      ))}
     </div>
+    
   )
 }
