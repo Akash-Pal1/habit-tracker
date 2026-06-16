@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts"
 import axios from "axios"
+import HabitForm from "./components/HabitForm"
 
 const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000"
 
@@ -11,8 +12,8 @@ export default function App() {
 
   useEffect(() => {
     fetchHabits()
-    const interval = setInterval(fetchHabits, 5000)
-    return () => clearInterval(interval)
+    // const interval = setInterval(fetchHabits, 5000)
+    // return () => clearInterval(interval)
   }, [])
 
   async function fetchHabits(){
@@ -31,7 +32,7 @@ export default function App() {
   async function handleAdd(name, description){
     setError("")
     try {
-      await axios.post('${API}/habits',{
+      await axios.post(`${API}/habits`,{
         name, description
       })
       fetchHabits()
@@ -41,7 +42,7 @@ export default function App() {
   }
 
   async function handelDelete(id){
-    await axios.delete('${API}/habits/${id}')
+    await axios.delete(`${API}/habits/${id}`)
     fetchHabits()
   }
 
@@ -60,7 +61,7 @@ export default function App() {
 
   return (
     <div>
-      {habit.length} habits
+      <HabitForm onAdd={handleAdd}></HabitForm>
     </div>
   )
 }
