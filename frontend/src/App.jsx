@@ -61,19 +61,26 @@ export default function App() {
   // if (error) return <p>{error}</p>
 
   return (
+    <div className="bg-gray-50 p-6">
+    <div className="mx-auto">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Habit Tracker</h1>
     <div>
       {error && <p className="text-red-500">{error}</p>}
       <HabitForm onAdd={handleAdd}></HabitForm>
-      <p>Total habits: {habits.length}</p>
-      {habits.map(habit => (
-      <HabitCard
-        key={habit.id}
-        habit={habit}        
-        onComplete={handleCompletion}
-        onDelete={handelDelete}
-      />
-      ))}
+      {habits.length === 0 ? (
+      <p className="font-bold text-red-600 mt-5">No habits yet. Add one above</p>
+        ) : (
+          habits.map(habit => (
+            <HabitCard
+              key={habit.id}
+              habit={habit}
+              onComplete={handleCompletion}
+              onDelete={handelDelete}
+            />
+          ))
+        )}
     </div>
-    
+    </div>
+    </div>
   )
 }

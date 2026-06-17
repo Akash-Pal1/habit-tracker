@@ -58,7 +58,7 @@ export default function HeatMap({habitId}){
     // console.log(dates.slice(-5))
     // console.log("Completion Set:",completionSet)
     return (
-        <div>
+        <div className="shadow p-2">
         <div
             style={{
                 display: "grid",
@@ -75,6 +75,7 @@ export default function HeatMap({habitId}){
                     gridColumn: label.column + 1,
                     whiteSpace:"nowrap"
                 }}
+                className="text-black-100 font-bold text-xl"
                 >
                 {label.month}
                 </div>
