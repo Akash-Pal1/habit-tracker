@@ -13,7 +13,9 @@ app = FastAPI(title="Habit Tracker API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://habit-tracker-y33f.onrender.com"
+    "https://habit-tracker-y33f.onrender.com",
+    "http://localhost:5173",
+    "http://localhost:5174"
     ],
     allow_credentials=False,
     allow_methods=["*"],
